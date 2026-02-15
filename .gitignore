@@ -10,3 +10,6 @@ frontend/dist/
 
 # Symlinked experiment directories
 *-experiments
+
+# Claude instructions (local only)
+CLAUDE.md
