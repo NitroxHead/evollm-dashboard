@@ -12,5 +12,15 @@ dependencies = [
     "websockets>=12.0",
 ]
 
+[project.optional-dependencies]
+test = ["pytest>=7.0", "pytest-asyncio>=0.21", "httpx>=0.24"]
+
 [project.scripts]
 dashboard = "backend.main:app"
+
+[tool.setuptools]
+packages = ["backend", "backend.adapters", "backend.models", "backend.services", "backend.api", "configs", "configs.projects"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
