@@ -1,8 +1,12 @@
 __pycache__/
 *.pyc
+*.egg-info/
 node_modules/
 frontend/dist/
 .env
 *.sqlite
 *.db
 .DS_Store
+
+# Symlinked experiment directories
+*-experiments
