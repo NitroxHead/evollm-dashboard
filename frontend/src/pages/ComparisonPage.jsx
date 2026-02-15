@@ -3,6 +3,7 @@ import { useExperiment } from '../hooks/useExperiments';
 import { useMetrics } from '../hooks/useMetrics';
 import FitnessCurve from '../components/visualizations/FitnessCurve';
 import { fmt } from '../lib/utils';
+import { FrameworkBadge } from '../components/experiments/StatusBadge';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 
 export default function ComparisonPage() {
@@ -32,7 +33,7 @@ export default function ComparisonPage() {
     <div style={{ flex: 1 }}>
       <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: 12 }}>
         {label}: {exp?.name || 'Unknown'}
-        <span className={`badge badge-${exp?.framework}`} style={{ marginLeft: 8 }}>{exp?.framework}</span>
+        <span style={{ marginLeft: 8 }}><FrameworkBadge framework={exp?.framework} /></span>
       </h3>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, marginBottom: 16 }}>

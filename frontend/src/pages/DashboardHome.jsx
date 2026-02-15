@@ -9,7 +9,7 @@ export default function DashboardHome() {
     <div>
       <h1 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: 8 }}>EvoLLM Dashboard</h1>
       <p style={{ color: 'var(--text-secondary)', marginBottom: 24, fontSize: '0.9rem' }}>
-        Monitoring OpenEvolve and ShinkaEvolve experiments
+        Monitoring evolutionary code experiments
       </p>
 
       {isLoading && <LoadingSpinner text="Discovering experiments..." />}
@@ -25,7 +25,7 @@ export default function DashboardHome() {
           <div style={{ fontSize: '2rem', marginBottom: 12 }}>{'\uD83D\uDD0D'}</div>
           <h3 style={{ marginBottom: 8 }}>No experiments found</h3>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-            Place OpenEvolve checkpoint directories or ShinkaEvolve .sqlite files
+            Place experiment data (checkpoint directories, .sqlite files, etc.)
             inside the evollm-dashboard/ directory.
           </p>
         </div>

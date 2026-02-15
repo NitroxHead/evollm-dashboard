@@ -11,7 +11,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.api import experiments, programs, conversations, metrics, islands, analytics, websocket
 from backend.api.websocket import ws_manager
-from backend.config import API_PREFIX, CORS_ORIGINS
+from backend.adapters.registry import registry
+from backend.config import API_PREFIX, CORS_ORIGINS, PROJECTS_DIR
 from backend.services.change_detection import change_engine
 from backend.services.experiment_manager import manager
 
@@ -26,6 +27,9 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     """Startup / shutdown lifecycle."""
     logger.info("Starting EvoLLM Dashboard backend...")
+
+    # Load project configs from entry points and config directory
+    registry.load_all(projects_dir=str(PROJECTS_DIR))
 
     # Start experiment discovery
     manager.start()
@@ -83,8 +87,13 @@ async def health():
     return {
         "status": "ok",
         "experiments_count": len(exps),
-        "experiments": [{"id": e.id, "name": e.name, "framework": e.framework.value} for e in exps],
+        "experiments": [{"id": e.id, "name": e.name, "framework": e.framework} for e in exps],
     }
+
+
+@app.get("/api/frameworks")
+async def frameworks():
+    return {"frameworks": registry.get_framework_metadata()}
 
 
 if __name__ == "__main__":

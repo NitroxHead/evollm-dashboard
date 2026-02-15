@@ -13,7 +13,7 @@ import time
 from typing import Callable, Dict, List, Optional, Set
 
 from backend.config import FS_DEBOUNCE, SQLITE_POLL_INTERVAL
-from backend.models.unified import EventType, Framework, UnifiedEvent
+from backend.models.unified import EventType, UnifiedEvent
 
 logger = logging.getLogger(__name__)
 
@@ -48,11 +48,13 @@ class ChangeDetectionEngine:
         """Register a callback(event: UnifiedEvent) for changes."""
         self._callbacks.append(callback)
 
-    def register_experiment(self, experiment_id: str, path: str, framework: Framework):
-        self._experiment_meta[experiment_id] = {"path": path, "framework": framework}
-        if framework == Framework.OPENEVOLVE and HAS_WATCHDOG:
+    def register_experiment(self, experiment_id: str, path: str, framework: str):
+        from backend.adapters.registry import registry
+        config = registry.get(framework)
+        strategy = config.change_detection if config else "poll"
+        self._experiment_meta[experiment_id] = {"path": path, "framework": framework, "strategy": strategy}
+        if strategy == "watchdog" and HAS_WATCHDOG:
             self._setup_watchdog(experiment_id, path)
-        # SQLite experiments are polled
 
     def start(self):
         self._running = True
@@ -88,7 +90,7 @@ class ChangeDetectionEngine:
         """Poll SQLite files for mtime changes."""
         while self._running:
             for eid, meta in list(self._experiment_meta.items()):
-                if meta["framework"] != Framework.SHINKAEVOLVE:
+                if meta.get("strategy") != "poll":
                     continue
                 path = meta["path"]
                 try:

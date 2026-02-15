@@ -69,5 +69,8 @@ export const fetchBestPath = (expId) => request(`/experiments/${expId}/best-path
 export const fetchEmbeddings = (expId, max = 200) =>
   request(`/experiments/${expId}/embeddings?max_programs=${max}`);
 
+// Frameworks
+export const fetchFrameworks = () => request('/frameworks');
+
 // Health
 export const fetchHealth = () => request('/health');

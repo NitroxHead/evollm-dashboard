@@ -7,12 +7,10 @@ import threading
 import time
 from typing import Dict, Optional
 
-from backend.adapters.auto_detect import discover_experiments
 from backend.adapters.base import FrameworkAdapter
-from backend.adapters.openevolve_adapter import OpenEvolveAdapter
-from backend.adapters.shinka_adapter import ShinkaAdapter
+from backend.adapters.registry import registry
 from backend.config import BASE_DIR, SCAN_INTERVAL
-from backend.models.unified import Framework, UnifiedExperiment
+from backend.models.unified import UnifiedExperiment
 
 logger = logging.getLogger(__name__)
 
@@ -39,17 +37,17 @@ class ExperimentManager:
 
     def scan(self):
         """Discover experiments in BASE_DIR."""
-        discovered = discover_experiments(str(BASE_DIR))
+        discovered = registry.discover_experiments(str(BASE_DIR))
         with self._lock:
-            for path, framework in discovered:
-                adapter = self._create_adapter(path, framework)
+            for path, framework_name in discovered:
+                adapter = registry.create_adapter(path, framework_name)
                 if adapter is None:
                     continue
                 try:
                     info = adapter.get_experiment_info()
                     self._adapters[info.id] = adapter
                     self._experiments[info.id] = info
-                    logger.info(f"Registered experiment: {info.id} ({info.framework.value})")
+                    logger.info(f"Registered experiment: {info.id} ({info.framework})")
                 except Exception as e:
                     logger.warning(f"Failed to load experiment at {path}: {e}")
 
@@ -60,13 +58,6 @@ class ExperimentManager:
                 self.scan()
             except Exception as e:
                 logger.error(f"Scan error: {e}")
-
-    def _create_adapter(self, path: str, framework: Framework) -> Optional[FrameworkAdapter]:
-        if framework == Framework.OPENEVOLVE:
-            return OpenEvolveAdapter(path)
-        elif framework == Framework.SHINKAEVOLVE:
-            return ShinkaAdapter(path)
-        return None
 
     # ── public API ──────────────────────────────────────────────────
 

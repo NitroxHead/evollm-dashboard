@@ -1,5 +1,6 @@
 import { useWebSocketStore } from '../../stores/websocketStore';
 import { useUiStore } from '../../stores/uiStore';
+import { FrameworkBadge } from '../experiments/StatusBadge';
 
 export default function Header({ experiment }) {
   const connected = useWebSocketStore((s) => s.connected);
@@ -38,7 +39,7 @@ export default function Header({ experiment }) {
           <>
             <span style={{ color: 'var(--text-muted)' }}>/</span>
             <span style={{ fontWeight: 500 }}>{experiment.name}</span>
-            <span className={`badge badge-${experiment.framework}`}>{experiment.framework}</span>
+            <FrameworkBadge framework={experiment.framework} />
             <span className={`badge badge-${experiment.status}`}>{experiment.status}</span>
           </>
         )}

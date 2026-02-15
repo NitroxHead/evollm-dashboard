@@ -15,7 +15,6 @@ from backend.adapters.base import FrameworkAdapter
 from backend.models.unified import (
     ConversationEntry,
     ExperimentStatus,
-    Framework,
     IslandState,
     LineageNode,
     LineageTree,
@@ -232,7 +231,7 @@ class OpenEvolveAdapter(FrameworkAdapter):
         return UnifiedExperiment(
             id=self._make_id(),
             name=Path(self.experiment_path).name,
-            framework=Framework.OPENEVOLVE,
+            framework="openevolve",
             path=self.experiment_path,
             status=self._infer_status(),
             last_modified=self.get_last_modified(),

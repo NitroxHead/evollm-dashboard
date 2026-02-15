@@ -9,11 +9,6 @@ from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, Field
 
 
-class Framework(str, enum.Enum):
-    OPENEVOLVE = "openevolve"
-    SHINKAEVOLVE = "shinkaevolve"
-
-
 class ExperimentStatus(str, enum.Enum):
     RUNNING = "running"
     PAUSED = "paused"
@@ -76,7 +71,7 @@ class UnifiedProgram(BaseModel):
 class UnifiedExperiment(BaseModel):
     id: str
     name: str
-    framework: Framework
+    framework: str
     path: str
     status: ExperimentStatus = ExperimentStatus.UNKNOWN
     last_modified: float = 0.0

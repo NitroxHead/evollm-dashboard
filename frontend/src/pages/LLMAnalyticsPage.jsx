@@ -33,7 +33,7 @@ export default function LLMAnalyticsPage() {
       <div>
         <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: 16 }}>LLM Analytics</h2>
         <div className="card" style={{ color: 'var(--text-muted)', textAlign: 'center', padding: 40 }}>
-          No cost or analytics data available. This feature requires ShinkaEvolve experiments with API cost tracking in metadata.
+          No cost or analytics data available. This feature requires experiments with API cost tracking in metadata.
         </div>
       </div>
     );

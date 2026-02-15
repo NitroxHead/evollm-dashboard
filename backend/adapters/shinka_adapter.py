@@ -18,7 +18,6 @@ from backend.models.unified import (
     ConversationEntry,
     CostTimeSeriesPoint,
     ExperimentStatus,
-    Framework,
     IslandState,
     LineageNode,
     LineageTree,
@@ -172,7 +171,7 @@ class ShinkaAdapter(FrameworkAdapter):
         return UnifiedExperiment(
             id=self._make_id(),
             name=Path(self._db_path).stem,
-            framework=Framework.SHINKAEVOLVE,
+            framework="shinkaevolve",
             path=self._db_path,
             status=self._infer_status(),
             last_modified=self.get_last_modified(),

@@ -7,6 +7,9 @@ from pathlib import Path
 # Base scan directory — the evollm-dashboard root
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Project config directory
+PROJECTS_DIR = BASE_DIR / "configs" / "projects"
+
 # How often to re-scan for new experiments (seconds)
 SCAN_INTERVAL = 30
 

@@ -145,7 +145,7 @@ export default function MetaScratchpadPage() {
 
       {files.length === 0 ? (
         <div className="card" style={{ color: 'var(--text-muted)', textAlign: 'center', padding: 40 }}>
-          No meta files found. This feature is available for ShinkaEvolve experiments with meta_N.txt files.
+          No meta files found. This feature is available for experiments with meta_N.txt files.
         </div>
       ) : (
         <div style={{ display: 'flex', gap: 16 }}>
