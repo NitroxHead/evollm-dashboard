@@ -12,6 +12,7 @@ import EmbeddingPage from './pages/EmbeddingPage';
 import MetaScratchpadPage from './pages/MetaScratchpadPage';
 import LLMAnalyticsPage from './pages/LLMAnalyticsPage';
 import ComparisonPage from './pages/ComparisonPage';
+import StatsPage from './pages/StatsPage';
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardHome /> },
       { path: 'compare', element: <ComparisonPage /> },
+      { path: 'stats', element: <StatsPage /> },
       {
         path: 'experiment/:experimentId',
         children: [

@@ -14,6 +14,9 @@ export const useUiStore = create((set, get) => ({
   autoRefreshFast: loadJson('evollm_auto_refresh_fast', false),
   bookmarks: loadJson('evollm_bookmarks', []),
   annotations: loadJson('evollm_annotations', {}),
+  homeGroupBy: loadJson('evollm_home_group_by', 'status'),
+  homeSortBy: loadJson('evollm_home_sort_by', 'last_modified'),
+  homeSortDesc: loadJson('evollm_home_sort_desc', true),
 
   toggleSidebar: () => set((s) => ({ sidebarOpen: !s.sidebarOpen })),
 
@@ -43,5 +46,24 @@ export const useUiStore = create((set, get) => ({
       const annotations = { ...s.annotations, [programId]: note };
       localStorage.setItem('evollm_annotations', JSON.stringify(annotations));
       return { annotations };
+    }),
+
+  setHomeGroupBy: (v) =>
+    set(() => {
+      localStorage.setItem('evollm_home_group_by', JSON.stringify(v));
+      return { homeGroupBy: v };
+    }),
+
+  setHomeSortBy: (v) =>
+    set(() => {
+      localStorage.setItem('evollm_home_sort_by', JSON.stringify(v));
+      return { homeSortBy: v };
+    }),
+
+  toggleHomeSortDesc: () =>
+    set((s) => {
+      const next = !s.homeSortDesc;
+      localStorage.setItem('evollm_home_sort_desc', JSON.stringify(next));
+      return { homeSortDesc: next };
     }),
 }));
